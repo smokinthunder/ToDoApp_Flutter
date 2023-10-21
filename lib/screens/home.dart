@@ -56,29 +56,32 @@ class _HomeState extends State<Home> {
                 children: [
                   searchBox(),
                   Expanded(
-                    child: ListView(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.only(
-                            top: 50,
-                            bottom: 20,
-                          ),
-                          child: const Text(
-                            'All ToDos',
-                            style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.w500,
+                    child: Container(
+                      margin: const EdgeInsets.only(bottom: 100),
+                      child: ListView(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(
+                              top: 50,
+                              bottom: 20,
+                            ),
+                            child: const Text(
+                              'All ToDos',
+                              style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
-                        ),
-                        // ToDoItem(),
-                        for (ToDo todoo in todosList)
-                          ToDoItem(
-                            todo: todoo,
-                            onToDoChanged: _handleToDoChange,
-                            onDeleteItem: _deleteToDoItem,
-                          ),
-                      ],
+                          // ToDoItem(),
+                          for (ToDo todoo in todosList.reversed)
+                            ToDoItem(
+                              todo: todoo,
+                              onToDoChanged: _handleToDoChange,
+                              onDeleteItem: _deleteToDoItem,
+                            ),
+                        ],
+                      ),
                     ),
                   )
                 ],
@@ -188,17 +191,15 @@ class _HomeState extends State<Home> {
   }
 
   Widget searchBox() {
-    return (Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 0,
-      ),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: const TextField(
-        decoration: InputDecoration(
+      child: TextField(
+        onChanged: (value) => _runFilter(value),
+        decoration: const InputDecoration(
           contentPadding: EdgeInsets.all(0),
           prefixIcon: Icon(
             Icons.search,
@@ -210,12 +211,10 @@ class _HomeState extends State<Home> {
             minWidth: 25,
           ),
           border: InputBorder.none,
-          hintText: "Search",
-          hintStyle: TextStyle(
-            color: tdGrey,
-          ),
+          hintText: 'Search',
+          hintStyle: TextStyle(color: tdGrey),
         ),
       ),
-    ));
+    );
   }
 }
